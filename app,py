@@ -1,0 +1,38 @@
+# app.py
+from flask import Flask, jsonify
+import requests
+
+app = Flask(__name__)
+
+# API endpoint URL
+API_ENDPOINT = "http://103.150.197.96:5005/api/v1/rekapitulasi_v2/jabar/harian"
+
+
+@app.route("/api/data", methods=["GET"])
+def get_data_from_api():
+    try:
+        # Request parameters
+        params = {"level": "kab"}
+
+        # Headers
+        headers = {"accept": "application/json"}
+
+        # Make the GET request to the external API
+        response = requests.get(API_ENDPOINT, params=params, headers=headers)
+
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            # The API returned data in JSON format
+            data = response.json()
+            return jsonify(data)
+        else:
+            # If the request was not successful, return an error message
+            return jsonify({"error": f"Request failed with status code: {response.status_code}"}), 500
+
+    except requests.exceptions.RequestException as e:
+        # Handle any exceptions that may occur during the request
+        return jsonify({"error": f"An error occurred: {e}"}), 500
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")

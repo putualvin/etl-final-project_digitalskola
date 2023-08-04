@@ -1,0 +1,16 @@
+{
+    "mysql": {
+        "host": "192.168.43.42",
+        "db": "digitalskola",
+        "user": "putualvin",
+        "password": "Lisak123",
+        "port":3306
+    },
+    "postgres": {
+        "host": "192.168.43.42",
+        "db": "data_engineer_project",
+        "user": "postgres",
+        "password": "Lisak123",
+        "port":"5432"
+    }
+}
